@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://di6d4ylnmqg8e"]
+[gd_scene load_steps=4 format=3 uid="uid://di6d4ylnmqg8e"]
 
 [ext_resource type="Script" uid="uid://d2djflf1f3die" path="res://scenes/game/game.ts" id="1_0sr1o"]
 [ext_resource type="Texture2D" uid="uid://hp27j5fjpk5" path="res://assets/GemBg.png" id="2_0sr1o"]
+[ext_resource type="PackedScene" uid="uid://di03oc38fyf78" path="res://entities/fox/fox.tscn" id="3_0sr1o"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0sr1o")
@@ -14,3 +15,7 @@ centered = false
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="Fox" parent="." instance=ExtResource("3_0sr1o")]
+z_index = 1
+position = Vector2(552, 580)

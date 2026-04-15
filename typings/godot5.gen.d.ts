@@ -246,7 +246,7 @@ declare module "godot" {
         static readonly NOTIFICATION_CRASH = 2012
         
         /** Notification received from the OS when an update of the Input Method Engine occurs (e.g. change of IME cursor position or composition string).  
-         *  Implemented only on macOS.  
+         *  Implemented on desktop and web platforms.  
          */
         static readonly NOTIFICATION_OS_IME_UPDATE = 2013
         
@@ -626,7 +626,7 @@ declare module "godot" {
         /** Calls the given [param method] name, passing [param args] as arguments, on this node and all of its children, recursively.  
          *  If [param parent_first] is `true`, the method is called on this node first, then on all of its children. If `false`, the children's methods are called first.  
          */
-        propagate_call(method: StringName, args?: GArray /* = [] */, parent_first?: boolean /* = false */): void
+        propagate_call(method: StringName, args?: GArray, parent_first?: boolean /* = false */): void
         
         /** If set to `true`, enables physics (fixed framerate) processing. When a node is being processed, it will receive a [constant NOTIFICATION_PHYSICS_PROCESS] at a fixed (usually 60 FPS, see [member Engine.physics_ticks_per_second] to change) interval (and the [method _physics_process] callback will be called if it exists).  
          *      
@@ -1906,7 +1906,7 @@ declare module "godot" {
          *      
          *  **Note:** Metadata that has a name starting with an underscore (`_`) is considered editor-only. Editor-only metadata is not displayed in the Inspector and should not be edited, although it can still be found by this method.  
          */
-        get_meta(name: StringName, default_?: any /* = <any> {} */): any
+        get_meta(name: StringName, default_?: any /* = {} */): any
         
         /** Returns `true` if a metadata entry is found with the given [param name]. See also [method get_meta], [method set_meta] and [method remove_meta].  
          *      
@@ -1922,7 +1922,7 @@ declare module "godot" {
         /** Adds a user-defined signal named [param signal]. Optional arguments for the signal can be added as an [Array] of dictionaries, each defining a `name` [String] and a `type` [int] (see [enum Variant.Type]). See also [method has_user_signal] and [method remove_user_signal].  
          *    
          */
-        add_user_signal(signal: string, arguments_?: GArray /* = [] */): void
+        add_user_signal(signal: string, arguments_?: GArray): void
         
         /** Returns `true` if the given user-defined [param signal] name exists. Only signals added with [method add_user_signal] are included. See also [method remove_user_signal]. */
         has_user_signal(signal: StringName): boolean
@@ -4324,7 +4324,7 @@ declare module "godot" {
         poll(): void
         
         /** Connects a [param packet_peer] beginning the DTLS handshake using the underlying [PacketPeerUDP] which must be connected (see [method PacketPeerUDP.connect_to_host]). You can optionally specify the [param client_options] to be used while verifying the TLS connections. See [method TLSOptions.client] and [method TLSOptions.client_unsafe]. */
-        connect_to_peer(packet_peer: PacketPeerUDP, hostname: string, client_options?: TLSOptions /* = undefined */): Error
+        connect_to_peer(packet_peer: PacketPeerUDP, hostname: string, client_options?: TLSOptions): Error
         
         /** Returns the status of the connection. */
         get_status(): PacketPeerDTLS.Status
@@ -5651,7 +5651,7 @@ declare module "godot" {
         /** Tells the [PhysicalBone3D] nodes in the Skeleton to start simulating and reacting to the physics world.  
          *  Optionally, a list of bone names can be passed-in, allowing only the passed-in bones to be simulated.  
          */
-        physical_bones_start_simulation(bones?: GArray<StringName> /* = [] */): void
+        physical_bones_start_simulation(bones?: GArray<StringName>): void
         
         /** Adds a collision exception to the physical bone.  
          *  Works just like the [RigidBody3D] node.  
@@ -5743,7 +5743,7 @@ declare module "godot" {
          *  [param safe_margin] is the extra margin used for collision recovery (see [member CharacterBody2D.safe_margin] for more details).  
          *  If [param recovery_as_collision] is `true`, any depenetration from the recovery phase is also reported as a collision; this is useful for checking whether the body would  *touch*  any other bodies.  
          */
-        test_move(from: Transform2D, motion: Vector2, collision?: KinematicCollision2D /* = undefined */, safe_margin?: float64 /* = 0.08 */, recovery_as_collision?: boolean /* = false */): boolean
+        test_move(from: Transform2D, motion: Vector2, collision?: KinematicCollision2D, safe_margin?: float64 /* = 0.08 */, recovery_as_collision?: boolean /* = false */): boolean
         
         /** Returns the gravity vector computed from all sources that can affect the body, including all gravity overrides from [Area2D] nodes and the global world gravity. */
         get_gravity(): Vector2
@@ -5784,7 +5784,7 @@ declare module "godot" {
          *  If [param recovery_as_collision] is `true`, any depenetration from the recovery phase is also reported as a collision; this is useful for checking whether the body would  *touch*  any other bodies.  
          *  [param max_collisions] allows to retrieve more than one collision result.  
          */
-        test_move(from: Transform3D, motion: Vector3, collision?: KinematicCollision3D /* = undefined */, safe_margin?: float64 /* = 0.001 */, recovery_as_collision?: boolean /* = false */, max_collisions?: int64 /* = 1 */): boolean
+        test_move(from: Transform3D, motion: Vector3, collision?: KinematicCollision3D, safe_margin?: float64 /* = 0.001 */, recovery_as_collision?: boolean /* = false */, max_collisions?: int64 /* = 1 */): boolean
         
         /** Returns the gravity vector computed from all sources that can affect the body, including all gravity overrides from [Area3D] nodes and the global world gravity. */
         get_gravity(): Vector3
@@ -6685,7 +6685,7 @@ declare module "godot" {
         /** Returns a new, pre-configured [PhysicsRayQueryParameters2D] object. Use it to quickly create query parameters using the most common options.  
          *    
          */
-        static create(from: Vector2, to: Vector2, collision_mask?: int64 /* = 4294967295 */, exclude?: GArray<RID> /* = [] */): PhysicsRayQueryParameters2D
+        static create(from: Vector2, to: Vector2, collision_mask?: int64 /* = 4294967295 */, exclude?: GArray<RID>): PhysicsRayQueryParameters2D
         
         /** The starting point of the ray being queried for, in global coordinates. */
         get from(): Vector2
@@ -6732,7 +6732,7 @@ declare module "godot" {
         /** Returns a new, pre-configured [PhysicsRayQueryParameters3D] object. Use it to quickly create query parameters using the most common options.  
          *    
          */
-        static create(from: Vector3, to: Vector3, collision_mask?: int64 /* = 4294967295 */, exclude?: GArray<RID> /* = [] */): PhysicsRayQueryParameters3D
+        static create(from: Vector3, to: Vector3, collision_mask?: int64 /* = 4294967295 */, exclude?: GArray<RID>): PhysicsRayQueryParameters3D
         
         /** The starting point of the ray being queried for, in global coordinates. */
         get from(): Vector3
@@ -8025,8 +8025,8 @@ declare module "godot" {
     class PointLight2D<Map extends NodePathMap = any> extends Light2D<Map> {
         constructor(identifier?: any)
         /** [Texture2D] used for the light's appearance. */
-        get texture(): null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/
-        set texture(value: null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/)
+        get texture(): null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture
+        set texture(value: null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture)
         
         /** The offset of the light's [member texture]. */
         get offset(): Vector2

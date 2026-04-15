@@ -264,8 +264,8 @@ declare module "godot" {
          *    
          *  Connections with `keep_alive` set to `false` may be deleted automatically if invalid during a redraw.  
          */
-        get connections(): GArray<any /**/>
-        set connections(value: GArray<any /**/>)
+        get connections(): GArray<any>
+        set connections(value: GArray<any>)
         
         /** The current zoom value. */
         get zoom(): float64
@@ -506,7 +506,7 @@ declare module "godot" {
          *      
          *  **Note:** This method only sets properties of the slot. To create the slot itself, add a [Control]-derived child to the GraphNode.  
          */
-        set_slot(slot_index: int64, enable_left_port: boolean, type_left: int64, color_left: Color, enable_right_port: boolean, type_right: int64, color_right: Color, custom_icon_left?: Texture2D /* = undefined */, custom_icon_right?: Texture2D /* = undefined */, draw_stylebox?: boolean /* = true */): void
+        set_slot(slot_index: int64, enable_left_port: boolean, type_left: int64, color_left: Color, enable_right_port: boolean, type_right: int64, color_right: Color, custom_icon_left?: Texture2D, custom_icon_right?: Texture2D, draw_stylebox?: boolean /* = true */): void
         
         /** Disables the slot with the given [param slot_index]. This will remove the corresponding input and output port from the GraphNode. */
         clear_slot(slot_index: int64): void
@@ -1207,7 +1207,7 @@ declare module "godot" {
         /** Connects to a host. This needs to be done before any requests are sent.  
          *  If no [param port] is specified (or `-1` is used), it is automatically set to 80 for HTTP and 443 for HTTPS. You can pass the optional [param tls_options] parameter to customize the trusted certification authorities, or the common name verification when using HTTPS. See [method TLSOptions.client] and [method TLSOptions.client_unsafe].  
          */
-        connect_to_host(host: string, port?: int64 /* = -1 */, tls_options?: TLSOptions /* = undefined */): Error
+        connect_to_host(host: string, port?: int64 /* = -1 */, tls_options?: TLSOptions): Error
         
         /** Sends a raw HTTP request to the connected host with the given [param method].  
          *  The URL parameter is usually just the part after the host, so for `https://example.com/index.php`, it is `/index.php`. When sending requests to an HTTP proxy server, it should be an absolute URL. For [constant HTTPClient.METHOD_OPTIONS] requests, `*` is also allowed. For [constant HTTPClient.METHOD_CONNECT] requests, it should be the authority component (`host:port`).  
@@ -1420,7 +1420,9 @@ declare module "godot" {
         get max_redirects(): int64
         set max_redirects(value: int64)
         
-        /** The duration to wait in seconds before a request times out. If [member timeout] is set to `0.0` then the request will never time out. For simple requests, such as communication with a REST API, it is recommended that [member timeout] is set to a value suitable for the server response time (e.g. between `1.0` and `10.0`). This will help prevent unwanted timeouts caused by variation in server response times while still allowing the application to detect when a request has timed out. For larger requests such as file downloads it is suggested the [member timeout] be set to `0.0`, disabling the timeout functionality. This will help to prevent large transfers from failing due to exceeding the timeout value. */
+        /** The duration to wait before a request times out, in seconds (independent of [member Engine.time_scale]). If [member timeout] is set to `0.0`, the request will never time out.  
+         *  For simple requests, such as communication with a REST API, it is recommended to set [member timeout] to a value suitable for the server response time (commonly between `1.0` and `10.0`). This will help prevent unwanted timeouts caused by variation in response times while still allowing the application to detect when a request has timed out. For larger requests such as file downloads, it is recommended to set [member timeout] to `0.0`, disabling the timeout functionality. This will help prevent large transfers from failing due to exceeding the timeout value.  
+         */
         get timeout(): float64
         set timeout(value: float64)
         
@@ -2286,7 +2288,7 @@ declare module "godot" {
     class ImmediateMesh extends Mesh {
         constructor(identifier?: any)
         /** Begin a new surface. */
-        surface_begin(primitive: Mesh.PrimitiveType, material?: Material /* = undefined */): void
+        surface_begin(primitive: Mesh.PrimitiveType, material?: Material): void
         
         /** Set the color attribute that will be pushed with the next vertex. */
         surface_set_color(color: Color): void
@@ -2350,7 +2352,7 @@ declare module "godot" {
          *      
          *  **Note:** When using indices, it is recommended to only use points, lines, or triangles.  
          */
-        add_surface(primitive: Mesh.PrimitiveType, arrays: GArray, blend_shapes?: GArray<GArray> /* = [] */, lods?: GDictionary /* = new GDictionary() */, material?: Material /* = undefined */, name?: string /* = '' */, flags?: int64 /* = 0 */): void
+        add_surface(primitive: Mesh.PrimitiveType, arrays: GArray, blend_shapes?: GArray<GArray>, lods?: GDictionary /* = new GDictionary() */, material?: Material, name?: string /* = '' */, flags?: int64 /* = 0 */): void
         
         /** Returns the number of surfaces that the mesh holds. */
         get_surface_count(): int64
@@ -2400,7 +2402,7 @@ declare module "godot" {
          *  This method caches the returned mesh, and subsequent calls will return the cached data until [method clear] is called.  
          *  If not yet cached and [param base_mesh] is provided, [param base_mesh] will be used and mutated.  
          */
-        get_mesh(base_mesh?: ArrayMesh /* = undefined */): null | ArrayMesh
+        get_mesh(base_mesh?: ArrayMesh): null | ArrayMesh
         
         /** Removes all surfaces and blend shapes from this [ImporterMesh]. */
         clear(): void
@@ -3072,7 +3074,7 @@ declare module "godot" {
          *      
          *  **Note:** [method create_instance] is not thread-safe. Use [method Object.call_deferred] if calling from a thread.  
          */
-        create_instance(replace?: boolean /* = false */, custom_scene?: PackedScene /* = undefined */): Node
+        create_instance(replace?: boolean /* = false */, custom_scene?: PackedScene): Node
         
         /** Gets the path to the [PackedScene] resource file that is loaded by default when calling [method create_instance]. Not thread-safe. Use [method Object.call_deferred] if calling from a thread. */
         get_instance_path(): string
@@ -3123,7 +3125,7 @@ declare module "godot" {
          *  Specify an [param icon], or use `null` as the [param icon] for a list item with no icon.  
          *  If [param selectable] is `true`, the list item will be selectable.  
          */
-        add_item(text: string, icon?: Texture2D /* = undefined */, selectable?: boolean /* = true */): int64
+        add_item(text: string, icon?: Texture2D, selectable?: boolean /* = true */): int64
         
         /** Adds an item to the item list with no text, only an icon. Returns the index of an added item. */
         add_icon_item(icon: Texture2D, selectable?: boolean /* = true */): int64
@@ -3520,7 +3522,7 @@ declare module "godot" {
          *  - [param message]: A custom message about this error.  
          *  - [param id]: The request this error is a response to.  
          */
-        make_response_error(code: int64, message: string, id?: any /* = <any> {} */): GDictionary
+        make_response_error(code: int64, message: string, id?: any /* = {} */): GDictionary
         /** @deprecated Internal use. Does not exist at runtime. */
         __godotNameMap: __NameMapJSONRPC;
     }
@@ -4426,8 +4428,8 @@ declare module "godot" {
          *      
          *  **Note:** Light projector textures are only supported in the Forward+ and Mobile rendering methods, not Compatibility.  
          */
-        get light_projector(): null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/
-        set light_projector(value: null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/)
+        get light_projector(): null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture
+        set light_projector(value: null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture)
         
         /** The size of the light in Godot units. Only available for [OmniLight3D]s and [SpotLight3D]s. Increasing this value will make the light fade out slower and shadows appear blurrier (also called percentage-closer soft shadows, or PCSS). This can be used to simulate area lights to an extent. Increasing this value above `0.0` for lights with shadows enabled will have a noticeable performance cost due to PCSS.  
          *      
@@ -5673,7 +5675,7 @@ declare module "godot" {
         static readonly NOTIFICATION_CRASH = 2012
         
         /** Notification received from the OS when an update of the Input Method Engine occurs (e.g. change of IME cursor position or composition string).  
-         *  Specific to the macOS platform.  
+         *  Implemented on desktop and web platforms.  
          */
         static readonly NOTIFICATION_OS_IME_UPDATE = 2013
         
@@ -6499,7 +6501,7 @@ declare module "godot" {
         create_convex_collision(clean?: boolean /* = true */, simplify?: boolean /* = false */): void
         
         /** This helper creates a [StaticBody3D] child node with multiple [ConvexPolygonShape3D] collision shapes calculated from the mesh geometry via convex decomposition. The convex decomposition operation can be controlled with parameters from the optional [param settings]. */
-        create_multiple_convex_collisions(settings?: MeshConvexDecompositionSettings /* = undefined */): void
+        create_multiple_convex_collisions(settings?: MeshConvexDecompositionSettings): void
         
         /** Returns the number of blend shapes available. Produces an error if [member mesh] is `null`. */
         get_blend_shape_count(): int64
@@ -6519,12 +6521,12 @@ declare module "godot" {
         /** Takes a snapshot from the current [ArrayMesh] with all blend shapes applied according to their current weights and bakes it to the provided [param existing] mesh. If no [param existing] mesh is provided a new [ArrayMesh] is created, baked and returned. Mesh surface materials are not copied.  
          *  **Performance:** [Mesh] data needs to be received from the GPU, stalling the [RenderingServer] in the process.  
          */
-        bake_mesh_from_current_blend_shape_mix(existing?: ArrayMesh /* = undefined */): null | ArrayMesh
+        bake_mesh_from_current_blend_shape_mix(existing?: ArrayMesh): null | ArrayMesh
         
         /** Takes a snapshot of the current animated skeleton pose of the skinned mesh and bakes it to the provided [param existing] mesh. If no [param existing] mesh is provided a new [ArrayMesh] is created, baked, and returned. Requires a skeleton with a registered skin to work. Blendshapes are ignored. Mesh surface materials are not copied.  
          *  **Performance:** [Mesh] data needs to be retrieved from the GPU, stalling the [RenderingServer] in the process.  
          */
-        bake_mesh_from_current_skeleton_pose(existing?: ArrayMesh /* = undefined */): null | ArrayMesh
+        bake_mesh_from_current_skeleton_pose(existing?: ArrayMesh): null | ArrayMesh
         
         /** The [Mesh] resource for the instance. */
         get mesh(): null | Mesh
@@ -7047,7 +7049,7 @@ declare module "godot" {
          *      
          *  **Note:** Prefer using [method Node.rpc], [method Node.rpc_id], or `my_method.rpc(peer, arg1, arg2, ...)` (in GDScript), since they are faster. This method is mostly useful in conjunction with [MultiplayerAPIExtension] when extending or replacing the multiplayer capabilities.  
          */
-        rpc(peer: int64, object: Object, method: StringName, arguments_?: GArray /* = [] */): Error
+        rpc(peer: int64, object: Object, method: StringName, arguments_?: GArray): Error
         
         /** Notifies the MultiplayerAPI of a new [param configuration] for the given [param object]. This method is used internally by [SceneTree] to configure the root path for this MultiplayerAPI (passing `null` and a valid [NodePath] as [param configuration]). This method can be further used by MultiplayerAPI implementations to provide additional features, refer to specific implementation (e.g. [SceneMultiplayer]) for details on how they use it.  
          *      
@@ -7332,7 +7334,7 @@ declare module "godot" {
          *      
          *  **Note:** Spawnable scenes are spawned automatically. [method spawn] is only needed for custom spawns.  
          */
-        spawn(data?: any /* = <any> {} */): null | Node
+        spawn(data?: any /* = {} */): null | Node
         get _spawnable_scenes(): PackedStringArray
         set _spawnable_scenes(value: PackedStringArray | string[])
         

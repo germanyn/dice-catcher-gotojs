@@ -1,6 +1,6 @@
-import _Dice from "../../../../entities/dice/dice";
+import Dice from "../../../../entities/dice/dice";
 declare module "godot" {
     interface ResourceTypes {
-        "res://entities/dice/dice.tscn": PackedScene<_Dice>;
+        "res://entities/dice/dice.tscn": PackedScene<Dice>;
     }
 }

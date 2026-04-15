@@ -3755,8 +3755,8 @@ declare module "godot" {
          *  **Note:** When using an [ArrayMesh], all vertex attributes except [constant Mesh.ARRAY_VERTEX], [constant Mesh.ARRAY_NORMAL] and [constant Mesh.ARRAY_TEX_UV] are left unused. Only [constant Mesh.ARRAY_VERTEX] and [constant Mesh.ARRAY_TEX_UV] will be passed to the GPU.  
          *  [constant Mesh.ARRAY_NORMAL] is only used to determine which faces require the use of flat shading. By default, CSGMesh will ignore the mesh's vertex normals, recalculate them for each vertex and use a smooth shader. If a flat shader is required for a face, ensure that all vertex normals of the face are approximately equal.  
          */
-        get mesh(): null | Mesh | any /*-PlaneMesh*/ | any /*-PointMesh*/ | any /*-QuadMesh*/ | any /*-RibbonTrailMesh*/
-        set mesh(value: null | Mesh | any /*-PlaneMesh*/ | any /*-PointMesh*/ | any /*-QuadMesh*/ | any /*-RibbonTrailMesh*/)
+        get mesh(): null | Mesh | PlaneMesh | PointMesh | QuadMesh | RibbonTrailMesh
+        set mesh(value: null | Mesh | PlaneMesh | PointMesh | QuadMesh | RibbonTrailMesh)
         
         /** The [Material] used in drawing the CSG shape. */
         get material(): null | BaseMaterial3D | ShaderMaterial
@@ -5004,19 +5004,19 @@ declare module "godot" {
         draw_style_box(style_box: StyleBox, rect: Rect2): void
         
         /** Draws a custom primitive. 1 point for a point, 2 points for a line, 3 points for a triangle, and 4 points for a quad. If 0 points or more than 4 points are specified, nothing will be drawn and an error message will be printed. The [param points] array is defined in local space. See also [method draw_line], [method draw_polyline], [method draw_polygon], and [method draw_rect]. */
-        draw_primitive(points: PackedVector2Array | Vector2[], colors: PackedColorArray | Color[], uvs: PackedVector2Array | Vector2[], texture?: Texture2D /* = undefined */): void
+        draw_primitive(points: PackedVector2Array | Vector2[], colors: PackedColorArray | Color[], uvs: PackedVector2Array | Vector2[], texture?: Texture2D): void
         
         /** Draws a solid polygon of any number of points, convex or concave. Unlike [method draw_colored_polygon], each point's color can be changed individually. The [param points] array is defined in local space. See also [method draw_polyline] and [method draw_polyline_colors]. If you need more flexibility (such as being able to use bones), use [method RenderingServer.canvas_item_add_triangle_array] instead.  
          *      
          *  **Note:** If you frequently redraw the same polygon with a large number of vertices, consider pre-calculating the triangulation with [method Geometry2D.triangulate_polygon] and using [method draw_mesh], [method draw_multimesh], or [method RenderingServer.canvas_item_add_triangle_array].  
          */
-        draw_polygon(points: PackedVector2Array | Vector2[], colors: PackedColorArray | Color[], uvs?: PackedVector2Array | Vector2[] /* = [] */, texture?: Texture2D /* = undefined */): void
+        draw_polygon(points: PackedVector2Array | Vector2[], colors: PackedColorArray | Color[], uvs?: PackedVector2Array | Vector2[] /* = [] */, texture?: Texture2D): void
         
         /** Draws a colored polygon of any number of points, convex or concave. The points in the [param points] array are defined in local space. Unlike [method draw_polygon], a single color must be specified for the whole polygon.  
          *      
          *  **Note:** If you frequently redraw the same polygon with a large number of vertices, consider pre-calculating the triangulation with [method Geometry2D.triangulate_polygon] and using [method draw_mesh], [method draw_multimesh], or [method RenderingServer.canvas_item_add_triangle_array].  
          */
-        draw_colored_polygon(points: PackedVector2Array | Vector2[], color: Color, uvs?: PackedVector2Array | Vector2[] /* = [] */, texture?: Texture2D /* = undefined */): void
+        draw_colored_polygon(points: PackedVector2Array | Vector2[], color: Color, uvs?: PackedVector2Array | Vector2[] /* = [] */, texture?: Texture2D): void
         
         /** Draws [param text] using the specified [param font] at the [param pos] in local space (bottom-left corner using the baseline of the font). The text will have its color multiplied by [param modulate]. If [param width] is greater than or equal to 0, the text will be clipped if it exceeds the specified width. If [param oversampling] is greater than zero, it is used as font oversampling factor, otherwise viewport oversampling settings are used.  
          *  **Example:** Draw "Hello world", using the project's default font:  
@@ -6266,7 +6266,7 @@ declare module "godot" {
          *      
          *  **Note:** This list will replace all current candidates.  
          */
-        add_code_completion_option(type: CodeEdit.CodeCompletionKind, display_text: string, insert_text: string, text_color?: Color /* = new Color(1, 1, 1, 1) */, icon?: Resource /* = undefined */, value?: any /* = <any> {} */, location?: int64 /* = 1024 */): void
+        add_code_completion_option(type: CodeEdit.CodeCompletionKind, display_text: string, insert_text: string, text_color?: Color /* = new Color(1, 1, 1, 1) */, icon?: Resource, value?: any /* = {} */, location?: int64 /* = 1024 */): void
         
         /** Submits all completion options added with [method add_code_completion_option]. Will try to force the autocomplete menu to popup, if [param force] is `true`.  
          *      
@@ -7488,7 +7488,7 @@ declare module "godot" {
         set_value(section: string, key: string, value: any): void
         
         /** Returns the current value for the specified section and key. If either the section or the key do not exist, the method returns the fallback [param default] value. If [param default] is not specified or set to `null`, an error is also raised. */
-        get_value(section: string, key: string, default_?: any /* = <any> {} */): any
+        get_value(section: string, key: string, default_?: any /* = {} */): any
         
         /** Returns `true` if the specified section exists. */
         has_section(section: string): boolean

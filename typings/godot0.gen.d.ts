@@ -95,6 +95,7 @@ declare module "godot" {
         | "ui_filedialog_show_hidden"
         | "ui_swap_input_direction"
         | "ui_colorpicker_delete_preset"
+        | "reset"
     // _singleton_class_: Performance
     namespace Performance {
         enum Monitor {
@@ -298,7 +299,7 @@ declare module "godot" {
          *  The debugger calls the callable to get the value of custom monitor. The callable must return a zero or positive integer or floating-point number.  
          *  Callables are called with arguments supplied in argument array.  
          */
-        static add_custom_monitor(id: StringName, callable: Callable, arguments_?: GArray /* = [] */): void
+        static add_custom_monitor(id: StringName, callable: Callable, arguments_?: GArray): void
         
         /** Removes the custom monitor with given [param id]. Prints an error if the given [param id] is already absent. */
         static remove_custom_monitor(id: StringName): void
@@ -563,7 +564,7 @@ declare module "godot" {
          *  **Note:** This method doesn't take potential feature overrides into account automatically. Use [method get_setting_with_override] to handle seamlessly.  
          *  See also [method has_setting] to check whether a setting exists.  
          */
-        static get_setting(name: string, default_value?: any /* = <any> {} */): any
+        static get_setting(name: string, default_value?: any /* = {} */): any
         
         /** Similar to [method get_setting], but applies feature tag overrides if any exists and is valid.  
          *  **Example:** If the setting override `"application/config/name.windows"` exists, and the following code is executed on a  *Windows*  operating system, the overridden setting is printed instead:  
@@ -873,7 +874,7 @@ declare module "godot" {
          *      
          *  **Note:** On Android, system commands such as `dumpsys` can only be run on a rooted device.  
          */
-        static execute(path: string, arguments_: PackedStringArray | string[], output?: GArray /* = [] */, read_stderr?: boolean /* = false */, open_console?: boolean /* = false */): int64
+        static execute(path: string, arguments_: PackedStringArray | string[], output?: GArray, read_stderr?: boolean /* = false */, open_console?: boolean /* = false */): int64
         
         /** Creates a new process that runs independently of Godot with redirected IO. It will not terminate when Godot terminates. The path specified in [param path] must exist and be an executable file or macOS `.app` bundle. The path is resolved based on the current platform. The [param arguments] are used in the given order and separated by a space.  
          *  If [param blocking] is `false`, created pipes work in non-blocking mode, i.e. read and write operations will return immediately. Use [method FileAccess.get_error] to check if the last read/write operation was successful.  
@@ -1936,7 +1937,7 @@ declare module "godot" {
          *      
          *  **Note:** The recommended way of using this method is to call it during different frames (e.g., in [method Node._process], instead of a loop).  
          */
-        static load_threaded_get_status(path: string, progress?: GArray /* = [] */): ResourceLoader.ThreadLoadStatus
+        static load_threaded_get_status(path: string, progress?: GArray): ResourceLoader.ThreadLoadStatus
         
         /** Returns the resource loaded by [method load_threaded_request].  
          *  If this is called before the loading thread is done (i.e. [method load_threaded_get_status] is not [constant THREAD_LOAD_LOADED]), the calling thread will be blocked until the resource has finished loading. However, it's recommended to use [method load_threaded_get_status] to known when the load has actually completed.  
@@ -2829,7 +2830,7 @@ declare module "godot" {
         static profiler_add_frame_data(name: StringName, data: GArray): void
         
         /** Calls the `toggle` callable of the profiler with given [param name] and [param arguments]. Enables/Disables the same profiler depending on [param enable] argument. */
-        static profiler_enable(name: StringName, enable: boolean, arguments_?: GArray /* = [] */): void
+        static profiler_enable(name: StringName, enable: boolean, arguments_?: GArray): void
         
         /** Registers a message capture with given [param name]. If [param name] is "my_message" then messages starting with "my_message:" will be called with the given callable.  
          *  The callable must accept a message string and a data array as argument. The callable should return `true` if the message is recognized.  
@@ -3252,7 +3253,7 @@ declare module "godot" {
          *  **Example:** Display the node selection dialog as soon as this node is added to the tree for the first time:  
          *    
          */
-        static popup_node_selector(callback: Callable, valid_types?: GArray<StringName> /* = [] */, current_value?: Node /* = undefined */): void
+        static popup_node_selector(callback: Callable, valid_types?: GArray<StringName>, current_value?: Node): void
         
         /** Pops up an editor dialog for selecting properties from [param object]. The [param callback] must take a single argument of type [NodePath]. It is called on the selected property path (see [method NodePath.get_as_property_path]) or the empty path `^""` if the dialog is canceled. If [param type_filter] is provided, the dialog will only show properties that match one of the listed [enum Variant.Type] values. If [param current_value] is provided, the property will be selected automatically in the property list, if it exists.  
          *    
@@ -3263,7 +3264,7 @@ declare module "godot" {
         static popup_method_selector(object: Object, callback: Callable, current_value?: string /* = '' */): void
         
         /** Pops up an editor dialog for quick selecting a resource file. The [param callback] must take a single argument of type [String] which will contain the path of the selected resource or be empty if the dialog is canceled. If [param base_types] is provided, the dialog will only show resources that match these types. Only types deriving from [Resource] are supported. */
-        static popup_quick_open(callback: Callable, base_types?: GArray<StringName> /* = [] */): void
+        static popup_quick_open(callback: Callable, base_types?: GArray<StringName>): void
         
         /** Pops up an editor dialog for creating an object.  
          *  The [param callback] must take a single argument of type [StringName] which will contain the type name of the selected object or be empty if no item is selected.  
@@ -3274,7 +3275,7 @@ declare module "godot" {
          *      
          *  **Note:** Trying to list the base type in the [param type_blocklist] will hide all types derived from the base type from the create dialog.  
          */
-        static popup_create_dialog(callback: Callable, base_type?: StringName /* = '' */, current_type?: string /* = '' */, dialog_title?: string /* = '' */, type_blocklist?: GArray<StringName> /* = [] */): void
+        static popup_create_dialog(callback: Callable, base_type?: StringName /* = '' */, current_type?: string /* = '' */, dialog_title?: string /* = '' */, type_blocklist?: GArray<StringName>): void
         
         /** Returns the editor's [FileSystemDock] instance.  
          *  **Warning:** Removing and freeing this node will render a part of the editor useless and may cause a crash.  
@@ -4629,7 +4630,7 @@ declare module "godot" {
          *  "_help" - Help menu (macOS).  
          *  [/codeblock]  
          */
-        static global_menu_add_item(menu_root: string, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static global_menu_add_item(menu_root: string, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new checkable item with text [param label] to the global menu with ID [param menu_root].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -4647,7 +4648,7 @@ declare module "godot" {
          *  "_help" - Help menu (macOS).  
          *  [/codeblock]  
          */
-        static global_menu_add_check_item(menu_root: string, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static global_menu_add_check_item(menu_root: string, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new item with text [param label] and icon [param icon] to the global menu with ID [param menu_root].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -4665,7 +4666,7 @@ declare module "godot" {
          *  "_help" - Help menu (macOS).  
          *  [/codeblock]  
          */
-        static global_menu_add_icon_item(menu_root: string, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static global_menu_add_icon_item(menu_root: string, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new checkable item with text [param label] and icon [param icon] to the global menu with ID [param menu_root].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -4683,7 +4684,7 @@ declare module "godot" {
          *  "_help" - Help menu (macOS).  
          *  [/codeblock]  
          */
-        static global_menu_add_icon_check_item(menu_root: string, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static global_menu_add_icon_check_item(menu_root: string, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new radio-checkable item with text [param label] to the global menu with ID [param menu_root].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -4703,7 +4704,7 @@ declare module "godot" {
          *  "_help" - Help menu (macOS).  
          *  [/codeblock]  
          */
-        static global_menu_add_radio_check_item(menu_root: string, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static global_menu_add_radio_check_item(menu_root: string, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new radio-checkable item with text [param label] and icon [param icon] to the global menu with ID [param menu_root].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -4723,7 +4724,7 @@ declare module "godot" {
          *  "_help" - Help menu (macOS).  
          *  [/codeblock]  
          */
-        static global_menu_add_icon_radio_check_item(menu_root: string, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static global_menu_add_icon_radio_check_item(menu_root: string, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new item with text [param label] to the global menu with ID [param menu_root].  
          *  Contrarily to normal binary items, multistate items can have more than two states, as defined by [param max_states]. Each press or activate of the item will increase the state by one. The default value is defined by [param default_state].  
@@ -4744,7 +4745,7 @@ declare module "godot" {
          *  "_help" - Help menu (macOS).  
          *  [/codeblock]  
          */
-        static global_menu_add_multistate_item(menu_root: string, label: string, max_states: int64, default_state: int64, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static global_menu_add_multistate_item(menu_root: string, label: string, max_states: int64, default_state: int64, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a separator between items to the global menu with ID [param menu_root]. Separators also occupy an index.  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -6299,7 +6300,7 @@ declare module "godot" {
          *      
          *  **Note:** This method is implemented on macOS and Windows.  
          */
-        static add_submenu_item(rid: RID, label: string, submenu_rid: RID, tag?: any /* = <any> {} */, index?: int64 /* = -1 */): int64
+        static add_submenu_item(rid: RID, label: string, submenu_rid: RID, tag?: any /* = {} */, index?: int64 /* = -1 */): int64
         
         /** Adds a new item with text [param label] to the global menu [param rid].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -6311,7 +6312,7 @@ declare module "godot" {
          *      
          *  **Note:** On Windows, [param accelerator] and [param key_callback] are ignored.  
          */
-        static add_item(rid: RID, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static add_item(rid: RID, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new checkable item with text [param label] to the global menu [param rid].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -6323,7 +6324,7 @@ declare module "godot" {
          *      
          *  **Note:** On Windows, [param accelerator] and [param key_callback] are ignored.  
          */
-        static add_check_item(rid: RID, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static add_check_item(rid: RID, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new item with text [param label] and icon [param icon] to the global menu [param rid].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -6335,7 +6336,7 @@ declare module "godot" {
          *      
          *  **Note:** On Windows, [param accelerator] and [param key_callback] are ignored.  
          */
-        static add_icon_item(rid: RID, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static add_icon_item(rid: RID, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new checkable item with text [param label] and icon [param icon] to the global menu [param rid].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -6347,7 +6348,7 @@ declare module "godot" {
          *      
          *  **Note:** On Windows, [param accelerator] and [param key_callback] are ignored.  
          */
-        static add_icon_check_item(rid: RID, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static add_icon_check_item(rid: RID, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new radio-checkable item with text [param label] to the global menu [param rid].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -6361,7 +6362,7 @@ declare module "godot" {
          *      
          *  **Note:** On Windows, [param accelerator] and [param key_callback] are ignored.  
          */
-        static add_radio_check_item(rid: RID, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static add_radio_check_item(rid: RID, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new radio-checkable item with text [param label] and icon [param icon] to the global menu [param rid].  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -6375,7 +6376,7 @@ declare module "godot" {
          *      
          *  **Note:** On Windows, [param accelerator] and [param key_callback] are ignored.  
          */
-        static add_icon_radio_check_item(rid: RID, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static add_icon_radio_check_item(rid: RID, icon: Texture2D, label: string, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a new item with text [param label] to the global menu [param rid].  
          *  Contrarily to normal binary items, multistate items can have more than two states, as defined by [param max_states]. Each press or activate of the item will increase the state by one. The default value is defined by [param default_state].  
@@ -6390,7 +6391,7 @@ declare module "godot" {
          *      
          *  **Note:** On Windows, [param accelerator] and [param key_callback] are ignored.  
          */
-        static add_multistate_item(rid: RID, label: string, max_states: int64, default_state: int64, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = <any> {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
+        static add_multistate_item(rid: RID, label: string, max_states: int64, default_state: int64, callback?: Callable /* = new Callable() */, key_callback?: Callable /* = new Callable() */, tag?: any /* = {} */, accelerator?: Key /* = 0 */, index?: int64 /* = -1 */): int64
         
         /** Adds a separator between items to the global menu [param rid]. Separators also occupy an index.  
          *  Returns index of the inserted item, it's not guaranteed to be the same as [param index] value.  
@@ -8461,7 +8462,7 @@ declare module "godot" {
         /** Returns the stride of the index buffer for a mesh with the given [param format]. */
         static mesh_surface_get_format_index_stride(format: RenderingServer.ArrayFormat, vertex_count: int64): int64
         static mesh_add_surface(mesh: RID, surface: GDictionary): void
-        static mesh_add_surface_from_arrays(mesh: RID, primitive: RenderingServer.PrimitiveType, arrays: GArray, blend_shapes?: GArray /* = [] */, lods?: GDictionary /* = new GDictionary() */, compress_format?: RenderingServer.ArrayFormat /* = 0 */): void
+        static mesh_add_surface_from_arrays(mesh: RID, primitive: RenderingServer.PrimitiveType, arrays: GArray, blend_shapes?: GArray, lods?: GDictionary /* = new GDictionary() */, compress_format?: RenderingServer.ArrayFormat /* = 0 */): void
         
         /** Returns a mesh's blend shape count. */
         static mesh_get_blend_shape_count(mesh: RID): int64

@@ -1711,10 +1711,10 @@ declare module "godot" {
          *  2. [code skip-lint]userdata`: a [Variant]; its value will be the [param userdata] passed into this method.  
          *  If [param userdata] is `null`, then [param callable] must take only the `state` parameter.  
          */
-        static body_set_force_integration_callback(body: RID, callable: Callable, userdata?: any /* = <any> {} */): void
+        static body_set_force_integration_callback(body: RID, callable: Callable, userdata?: any /* = {} */): void
         
         /** Returns `true` if a collision would result from moving the body along a motion vector from a given point in space. See [PhysicsTestMotionParameters2D] for the available motion parameters. Optionally a [PhysicsTestMotionResult2D] object can be passed, which will be used to store the information about the resulting collision. */
-        static body_test_motion(body: RID, parameters: PhysicsTestMotionParameters2D, result?: PhysicsTestMotionResult2D /* = undefined */): boolean
+        static body_test_motion(body: RID, parameters: PhysicsTestMotionParameters2D, result?: PhysicsTestMotionResult2D): boolean
         
         /** Returns the [PhysicsDirectBodyState2D] of the body. Returns `null` if the body is destroyed or not assigned to a space. */
         static body_get_direct_state(body: RID): null | PhysicsDirectBodyState2D
@@ -2570,13 +2570,13 @@ declare module "godot" {
          *  2. [code skip-lint]userdata`: a [Variant]; its value will be the [param userdata] passed into this method.  
          *  If [param userdata] is `null`, then [param callable] must take only the `state` parameter.  
          */
-        static body_set_force_integration_callback(body: RID, callable: Callable, userdata?: any /* = <any> {} */): void
+        static body_set_force_integration_callback(body: RID, callable: Callable, userdata?: any /* = {} */): void
         
         /** Sets the body pickable with rays if [param enable] is set. */
         static body_set_ray_pickable(body: RID, enable: boolean): void
         
         /** Returns `true` if a collision would result from moving along a motion vector from a given point in space. [PhysicsTestMotionParameters3D] is passed to set motion parameters. [PhysicsTestMotionResult3D] can be passed to return additional information. */
-        static body_test_motion(body: RID, parameters: PhysicsTestMotionParameters3D, result?: PhysicsTestMotionResult3D /* = undefined */): boolean
+        static body_test_motion(body: RID, parameters: PhysicsTestMotionParameters3D, result?: PhysicsTestMotionResult3D): boolean
         
         /** Returns the [PhysicsDirectBodyState3D] of the body. Returns `null` if the body is destroyed or removed from the physics space. */
         static body_get_direct_state(body: RID): null | PhysicsDirectBodyState3D
@@ -7602,7 +7602,7 @@ declare module "godot" {
          *      
          *  **Note:** When using indices, it is recommended to only use points, lines, or triangles.  
          */
-        add_surface_from_arrays(primitive: Mesh.PrimitiveType, arrays: GArray, blend_shapes?: GArray<GArray> /* = [] */, lods?: GDictionary /* = new GDictionary() */, flags?: Mesh.ArrayFormat /* = 0 */): void
+        add_surface_from_arrays(primitive: Mesh.PrimitiveType, arrays: GArray, blend_shapes?: GArray<GArray>, lods?: GDictionary /* = new GDictionary() */, flags?: Mesh.ArrayFormat /* = 0 */): void
         
         /** Removes all surfaces from this [ArrayMesh]. */
         clear_surfaces(): void

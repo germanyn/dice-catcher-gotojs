@@ -34,7 +34,11 @@ export default class Dice extends Area2D<SceneNodes['entities/dice/dice.tscn']> 
 	private checkGameOver() {
 		if (this.get_viewport_rect().end.y < this.position.y) {
 			this.game_over.emit()
-			this.queue_free()
+			this.destroy()
 		}
+	}
+
+	public destroy() {
+		this.queue_free()
 	}
 }

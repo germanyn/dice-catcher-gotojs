@@ -2070,8 +2070,8 @@ declare module "godot" {
         values(): UndefinedToNull<T[keyof T]> extends GAny ? GArray<UndefinedToNull<T[keyof T]>> : GArray
         duplicate(deep?: boolean /* = false */): GDictionary<T>
         duplicate_deep(deep_subresources_mode?: int64 /* = 1 */): GDictionary
-        get<K extends keyof T>(key: K, default_?: any /* = <any> {} */): UndefinedToNull<T[K]>
-        get_or_add<K extends keyof T>(key: K, default_: T[K] /* = <any> {} */): UndefinedToNull<T[K]>
+        get<K extends keyof T>(key: K, default_?: any /* = {} */): UndefinedToNull<T[K]>
+        get_or_add<K extends keyof T>(key: K, default_: T[K] /* = {} */): UndefinedToNull<T[K]>
         set<K extends keyof T>(key: K, value: T[K]): boolean
         is_typed(): boolean
         is_typed_key(): boolean
@@ -2160,7 +2160,7 @@ declare module "godot" {
         slice(begin: int64, end?: int64 /* = 2147483647 */, step?: int64 /* = 1 */, deep?: boolean /* = false */): GArray<GArrayElement<T>>
         filter(method: Callable<(value: GArrayElement<T>) => boolean>): GArray<GArrayElement<T>>
         map<U extends GAny>(method: Callable<(value: GArrayElement<T>) => U>): GArray<U>
-        reduce(method: Callable, accum?: any /* = <any> {} */): any
+        reduce(method: Callable, accum?: any /* = {} */): any
         any(method: Callable<(value: GArrayElement<T>) => boolean>): boolean
         all(method: Callable<(value: GArrayElement<T>) => boolean>): boolean
         max(): GArrayElement<T>
