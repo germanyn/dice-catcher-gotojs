@@ -1717,7 +1717,7 @@ declare module "godot" {
         _is_output_port_expanded(_unnamed_arg0: int64): boolean
         
         /** Sets the default [param value] for the selected input [param port]. */
-        set_input_port_default_value(port: int64, value: any, prev_value?: any /* = {} */): void
+        set_input_port_default_value(port: int64, value: any, prev_value?: any /* = <any> {} */): void
         
         /** Returns the default value of the input [param port]. */
         get_input_port_default_value(port: int64): any
@@ -4814,7 +4814,7 @@ declare module "godot" {
          *      
          *  **Note:** [GeometryInstance3D]s and [Light3D]s must be fully ready before [method bake] is called. If you are procedurally creating those and some meshes or lights are missing from your baked [VoxelGI], use `call_deferred("bake")` instead of calling [method bake] directly.  
          */
-        bake(from_node?: Node, create_visual_debug?: boolean /* = false */): void
+        bake(from_node?: Node /* = undefined */, create_visual_debug?: boolean /* = false */): void
         
         /** Calls [method bake] with `create_visual_debug` enabled. */
         debug_bake(): void
@@ -5023,15 +5023,15 @@ declare module "godot" {
         /** Initialize the multiplayer peer as a server (with unique ID of `1`). This mode enables [method MultiplayerPeer.is_server_relay_supported], allowing the upper [MultiplayerAPI] layer to perform peer exchange and packet relaying.  
          *  You can optionally specify a [param channels_config] array of [enum MultiplayerPeer.TransferMode] which will be used to create extra channels (WebRTC only supports one transfer mode per channel).  
          */
-        create_server(channels_config?: GArray): Error
+        create_server(channels_config?: GArray /* = [] */): Error
         
         /** Initialize the multiplayer peer as a client with the given [param peer_id] (must be between 2 and 2147483647). In this mode, you should only call [method add_peer] once and with [param peer_id] of `1`. This mode enables [method MultiplayerPeer.is_server_relay_supported], allowing the upper [MultiplayerAPI] layer to perform peer exchange and packet relaying.  
          *  You can optionally specify a [param channels_config] array of [enum MultiplayerPeer.TransferMode] which will be used to create extra channels (WebRTC only supports one transfer mode per channel).  
          */
-        create_client(peer_id: int64, channels_config?: GArray): Error
+        create_client(peer_id: int64, channels_config?: GArray /* = [] */): Error
         
         /** Initialize the multiplayer peer as a mesh (i.e. all peers connect to each other) with the given [param peer_id] (must be between 1 and 2147483647). */
-        create_mesh(peer_id: int64, channels_config?: GArray): Error
+        create_mesh(peer_id: int64, channels_config?: GArray /* = [] */): Error
         
         /** Add a new peer to the mesh with the given [param peer_id]. The [WebRTCPeerConnection] must be in state [constant WebRTCPeerConnection.STATE_NEW].  
          *  Three channels will be created for reliable, unreliable, and ordered transport. The value of [param unreliable_lifetime] will be passed to the `"maxPacketLifetime"` option when creating unreliable and ordered channels (see [method WebRTCPeerConnection.create_data_channel]).  
@@ -5212,10 +5212,10 @@ declare module "godot" {
          *      
          *  **Note:** It is recommended to specify the scheme part of the URL, i.e. the [param url] should start with either `ws://` or `wss://`.  
          */
-        create_client(url: string, tls_client_options?: TLSOptions): Error
+        create_client(url: string, tls_client_options?: TLSOptions /* = undefined */): Error
         
         /** Starts a new multiplayer server listening on the given [param port]. You can optionally specify a [param bind_address], and provide valid [param tls_server_options] to use TLS. See [method TLSOptions.server]. */
-        create_server(port: int64, bind_address?: string /* = '*' */, tls_server_options?: TLSOptions): Error
+        create_server(port: int64, bind_address?: string /* = '*' */, tls_server_options?: TLSOptions /* = undefined */): Error
         
         /** Returns the [WebSocketPeer] associated to the given [param peer_id]. */
         get_peer(peer_id: int64): null | WebSocketPeer
@@ -5289,7 +5289,7 @@ declare module "godot" {
          *      
          *  **Note:** To avoid mixed content warnings or errors in Web, you may have to use a [param url] that starts with `wss://` (secure) instead of `ws://`. When doing so, make sure to use the fully qualified domain name that matches the one defined in the server's TLS certificate. Do not connect directly via the IP address for `wss://` connections, as it won't match with the TLS certificate.  
          */
-        connect_to_url(url: string, tls_client_options?: TLSOptions): Error
+        connect_to_url(url: string, tls_client_options?: TLSOptions /* = undefined */): Error
         
         /** Accepts a peer connection performing the HTTP handshake as a WebSocket server. The [param stream] must be a valid TCP stream retrieved via [method TCPServer.take_connection], or a TLS stream accepted via [method StreamPeerTLS.accept_stream].  
          *      

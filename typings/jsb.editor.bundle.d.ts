@@ -185,8 +185,7 @@ declare module "jsb.editor.codegen" {
         make_classname(class_name: string, internal?: boolean): string;
         make_typename(info: PropertyInfo, used_as_input: boolean, non_nullable: boolean): string;
         make_arg(info: PropertyInfo, optional?: boolean): string;
-        private is_empty_default_value;
-        make_literal_value(value: GodotJsb.editor.DefaultArgumentInfo): string | null;
+        make_literal_value(value: GodotJsb.editor.DefaultArgumentInfo): string;
         make_arg_default_value(method_info: GodotJsb.editor.MethodBind, index: number): string;
         make_args(method_info: GodotJsb.editor.MethodBind): string;
         make_return(method_info: GodotJsb.editor.MethodBind): string;
@@ -204,7 +203,7 @@ declare module "jsb.editor.codegen" {
         private split;
         private cleanup;
         has_class(name?: string): boolean;
-        emit(showToast?: boolean): Promise<void>;
+        emit(): Promise<void>;
         private emit_utility;
         private emit_global;
         private emit_aliases;

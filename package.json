@@ -1,7 +1,6 @@
 {
   "name": "dice-catcher",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "build": "godot-ts build",
     "dev": "npm-run-all build generate -p watch watch-generate open-editor",
@@ -16,7 +15,7 @@
     "@types/node": "^22.7.3",
     "nodemon": "3.1.10",
     "npm-run-all2": "8.0.1",
-    "typescript": "5.8.3"
+    "typescript": "^6.0.2"
   },
   "godot-ts": {
     "src": ".",

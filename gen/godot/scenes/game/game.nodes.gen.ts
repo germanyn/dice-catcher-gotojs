@@ -3,8 +3,14 @@ declare module "godot" {
     interface SceneNodes {
         "scenes/game/game.tscn": {
             GemBg: Sprite2D<{}>;
-            SpawnTimer: Timer<{}>;
-            Fox: Fox;
+            ScoreLabel: Label<{}>;
+            Music: AudioStreamPlayer<{}>;
+            Pausable: Node<
+                {
+                    SpawnTimer: Timer<{}>;
+                    Fox: Fox;
+                }
+            >;
         };
     }
 }

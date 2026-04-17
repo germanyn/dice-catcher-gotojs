@@ -950,17 +950,17 @@ declare module "godot" {
         /** Returns the substring of the match from the source string. Capturing groups can be retrieved by providing its group number as an integer or its string name (if it's a named group). The default value of 0 refers to the whole pattern.  
          *  Returns an empty string if the group did not match or doesn't exist.  
          */
-        get_string(name?: any /* = {} */): string
+        get_string(name?: any /* = <any> {} */): string
         
         /** Returns the starting position of the match within the source string. The starting position of capturing groups can be retrieved by providing its group number as an integer or its string name (if it's a named group). The default value of 0 refers to the whole pattern.  
          *  Returns -1 if the group did not match or doesn't exist.  
          */
-        get_start(name?: any /* = {} */): int64
+        get_start(name?: any /* = <any> {} */): int64
         
         /** Returns the end position of the match within the source string. The end position of capturing groups can be retrieved by providing its group number as an integer or its string name (if it's a named group). The default value of 0 refers to the whole pattern.  
          *  Returns -1 if the group did not match or doesn't exist.  
          */
-        get_end(name?: any /* = {} */): int64
+        get_end(name?: any /* = <any> {} */): int64
         
         /** The source string used with the search pattern to find this matching result. */
         get subject(): string
@@ -3036,7 +3036,7 @@ declare module "godot" {
          *      
          *  **Note:** Not to be confused with [method RenderingServer.texture_2d_create], which creates the Godot-specific [Texture2D] resource as opposed to the graphics API's own texture type.  
          */
-        texture_create(format: RDTextureFormat, view: RDTextureView, data?: GArray<PackedByteArray>): RID
+        texture_create(format: RDTextureFormat, view: RDTextureView, data?: GArray<PackedByteArray> /* = [] */): RID
         
         /** Creates a shared texture using the specified [param view] and the texture information from [param with_texture]. */
         texture_create_shared(view: RDTextureView, with_texture: RID): RID
@@ -3307,7 +3307,7 @@ declare module "godot" {
         /** Creates a new render pipeline. It can be accessed with the RID that is returned.  
          *  Once finished with your RID, you will want to free the RID using the RenderingDevice's [method free_rid] method.  
          */
-        render_pipeline_create(shader: RID, framebuffer_format: int64, vertex_format: int64, primitive: RenderingDevice.RenderPrimitive, rasterization_state: RDPipelineRasterizationState, multisample_state: RDPipelineMultisampleState, stencil_state: RDPipelineDepthStencilState, color_blend_state: RDPipelineColorBlendState, dynamic_state_flags?: RenderingDevice.PipelineDynamicStateFlags /* = 0 */, for_render_pass?: int64 /* = 0 */, specialization_constants?: GArray<RDPipelineSpecializationConstant>): RID
+        render_pipeline_create(shader: RID, framebuffer_format: int64, vertex_format: int64, primitive: RenderingDevice.RenderPrimitive, rasterization_state: RDPipelineRasterizationState, multisample_state: RDPipelineMultisampleState, stencil_state: RDPipelineDepthStencilState, color_blend_state: RDPipelineColorBlendState, dynamic_state_flags?: RenderingDevice.PipelineDynamicStateFlags /* = 0 */, for_render_pass?: int64 /* = 0 */, specialization_constants?: GArray<RDPipelineSpecializationConstant> /* = [] */): RID
         
         /** Returns `true` if the render pipeline specified by the [param render_pipeline] RID is valid, `false` otherwise. */
         render_pipeline_is_valid(render_pipeline: RID): boolean
@@ -3315,7 +3315,7 @@ declare module "godot" {
         /** Creates a new compute pipeline. It can be accessed with the RID that is returned.  
          *  Once finished with your RID, you will want to free the RID using the RenderingDevice's [method free_rid] method.  
          */
-        compute_pipeline_create(shader: RID, specialization_constants?: GArray<RDPipelineSpecializationConstant>): RID
+        compute_pipeline_create(shader: RID, specialization_constants?: GArray<RDPipelineSpecializationConstant> /* = [] */): RID
         
         /** Returns `true` if the compute pipeline specified by the [param compute_pipeline] RID is valid, `false` otherwise. */
         compute_pipeline_is_valid(compute_pipeline: RID): boolean
@@ -3356,7 +3356,7 @@ declare module "godot" {
         draw_list_begin(framebuffer: RID, draw_flags?: RenderingDevice.DrawFlags /* = 0 */, clear_color_values?: PackedColorArray | Color[] /* = [] */, clear_depth_value?: float64 /* = 1 */, clear_stencil_value?: int64 /* = 0 */, region?: Rect2 /* = new Rect2(0, 0, 0, 0) */, breadcrumb?: int64 /* = 0 */): int64
         
         /** This method does nothing and always returns an empty [PackedInt64Array]. */
-        draw_list_begin_split(framebuffer: RID, splits: int64, initial_color_action: RenderingDevice.InitialAction, final_color_action: RenderingDevice.FinalAction, initial_depth_action: RenderingDevice.InitialAction, final_depth_action: RenderingDevice.FinalAction, clear_color_values?: PackedColorArray | Color[] /* = [] */, clear_depth?: float64 /* = 1 */, clear_stencil?: int64 /* = 0 */, region?: Rect2 /* = new Rect2(0, 0, 0, 0) */, storage_textures?: GArray<RID>): PackedInt64Array
+        draw_list_begin_split(framebuffer: RID, splits: int64, initial_color_action: RenderingDevice.InitialAction, final_color_action: RenderingDevice.FinalAction, initial_depth_action: RenderingDevice.InitialAction, final_depth_action: RenderingDevice.FinalAction, clear_color_values?: PackedColorArray | Color[] /* = [] */, clear_depth?: float64 /* = 1 */, clear_stencil?: int64 /* = 0 */, region?: Rect2 /* = new Rect2(0, 0, 0, 0) */, storage_textures?: GArray<RID> /* = [] */): PackedInt64Array
         
         /** Sets blend constants for the specified [param draw_list] to [param color]. Blend constants are used only if the graphics pipeline is created with [constant DYNAMIC_STATE_BLEND_CONSTANTS] flag set. */
         draw_list_set_blend_constants(draw_list: int64, color: Color): void
@@ -4304,7 +4304,7 @@ declare module "godot" {
          *  If [param height_in_percent] is set, [param height] values are percentages of the control width instead of pixels.  
          *  [param alt_text] is used as the image description for assistive apps.  
          */
-        add_image(image: Texture2D, width?: int64 /* = 0 */, height?: int64 /* = 0 */, color?: Color /* = new Color(1, 1, 1, 1) */, inline_align?: InlineAlignment /* = 5 */, region?: Rect2 /* = new Rect2(0, 0, 0, 0) */, key?: any /* = {} */, pad?: boolean /* = false */, tooltip?: string /* = '' */, width_in_percent?: boolean /* = false */, height_in_percent?: boolean /* = false */, alt_text?: string /* = '' */): void
+        add_image(image: Texture2D, width?: int64 /* = 0 */, height?: int64 /* = 0 */, color?: Color /* = new Color(1, 1, 1, 1) */, inline_align?: InlineAlignment /* = 5 */, region?: Rect2 /* = new Rect2(0, 0, 0, 0) */, key?: any /* = <any> {} */, pad?: boolean /* = false */, tooltip?: string /* = '' */, width_in_percent?: boolean /* = false */, height_in_percent?: boolean /* = false */, alt_text?: string /* = '' */): void
         
         /** Updates the existing images with the key [param key]. Only properties specified by [param mask] bits are updated. See [method add_image]. */
         update_image(key: any, mask: RichTextLabel.ImageUpdateMask, image: Texture2D, width?: int64 /* = 0 */, height?: int64 /* = 0 */, color?: Color /* = new Color(1, 1, 1, 1) */, inline_align?: InlineAlignment /* = 5 */, region?: Rect2 /* = new Rect2(0, 0, 0, 0) */, pad?: boolean /* = false */, tooltip?: string /* = '' */, width_in_percent?: boolean /* = false */, height_in_percent?: boolean /* = false */): void
@@ -7222,7 +7222,7 @@ declare module "godot" {
         /** Tells the [PhysicalBone3D] nodes in the Skeleton to start simulating and reacting to the physics world.  
          *  Optionally, a list of bone names can be passed-in, allowing only the passed-in bones to be simulated.  
          */
-        physical_bones_start_simulation(bones?: GArray<StringName>): void
+        physical_bones_start_simulation(bones?: GArray<StringName> /* = [] */): void
         
         /** Adds a collision exception to the physical bone.  
          *  Works just like the [RigidBody3D] node.  
@@ -7683,12 +7683,12 @@ declare module "godot" {
         /** Tell the [PhysicalBone2D] nodes to start simulating and interacting with the physics world.  
          *  Optionally, an array of bone names can be passed to this function, and that will cause only [PhysicalBone2D] nodes with those names to start simulating.  
          */
-        start_simulation(bones?: GArray<StringName>): void
+        start_simulation(bones?: GArray<StringName> /* = [] */): void
         
         /** Tell the [PhysicalBone2D] nodes to stop simulating and interacting with the physics world.  
          *  Optionally, an array of bone names can be passed to this function, and that will cause only [PhysicalBone2D] nodes with those names to stop simulating.  
          */
-        stop_simulation(bones?: GArray<StringName>): void
+        stop_simulation(bones?: GArray<StringName> /* = [] */): void
         
         /** The number of [PhysicalBone2D] nodes linked in this modification. */
         get physical_bone_chain_length(): int64

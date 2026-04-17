@@ -379,8 +379,8 @@ declare module "godot" {
          *      
          *  **Note:** Unlike [BaseMaterial3D] whose filter mode can be adjusted on a per-material basis, the filter mode for [Decal] textures is set globally with [member ProjectSettings.rendering/textures/decals/filter].  
          */
-        get texture_albedo(): null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture
-        set texture_albedo(value: null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture)
+        get texture_albedo(): null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/
+        set texture_albedo(value: null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/)
         
         /** [Texture2D] with the per-pixel normal map for the decal. Use this to add extra detail to decals.  
          *      
@@ -388,8 +388,8 @@ declare module "godot" {
          *      
          *  **Note:** Setting this texture alone will not result in a visible decal, as [member texture_albedo] must also be set. To create a normal-only decal, load an albedo texture into [member texture_albedo] and set [member albedo_mix] to `0.0`. The albedo texture's alpha channel will be used to determine where the underlying surface's normal map should be overridden (and its intensity).  
          */
-        get texture_normal(): null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture
-        set texture_normal(value: null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture)
+        get texture_normal(): null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/
+        set texture_normal(value: null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/)
         
         /** [Texture2D] storing ambient occlusion, roughness, and metallic for the decal. Use this to add extra detail to decals.  
          *      
@@ -397,15 +397,15 @@ declare module "godot" {
          *      
          *  **Note:** Setting this texture alone will not result in a visible decal, as [member texture_albedo] must also be set. To create an ORM-only decal, load an albedo texture into [member texture_albedo] and set [member albedo_mix] to `0.0`. The albedo texture's alpha channel will be used to determine where the underlying surface's ORM map should be overridden (and its intensity).  
          */
-        get texture_orm(): null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture
-        set texture_orm(value: null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture)
+        get texture_orm(): null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/
+        set texture_orm(value: null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/)
         
         /** [Texture2D] with the emission [Color] of the Decal. Either this or the [member texture_albedo] must be set for the Decal to be visible. Use the alpha channel like a mask to smoothly blend the edges of the decal with the underlying object.  
          *      
          *  **Note:** Unlike [BaseMaterial3D] whose filter mode can be adjusted on a per-material basis, the filter mode for [Decal] textures is set globally with [member ProjectSettings.rendering/textures/decals/filter].  
          */
-        get texture_emission(): null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture
-        set texture_emission(value: null | Texture2D | AnimatedTexture | AtlasTexture | CameraTexture | CanvasTexture | MeshTexture | Texture2DRD | ViewportTexture)
+        get texture_emission(): null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/
+        set texture_emission(value: null | Texture2D | any /*-AnimatedTexture*/ | any /*-AtlasTexture*/ | any /*-CameraTexture*/ | any /*-CanvasTexture*/ | any /*-MeshTexture*/ | any /*-Texture2DRD*/ | any /*-ViewportTexture*/)
         
         /** Energy multiplier for the emission texture. This will make the decal emit light at a higher or lower intensity, independently of the albedo color. See also [member modulate]. */
         get emission_energy(): float64
@@ -866,7 +866,7 @@ declare module "godot" {
         dtls_server_setup(server_options: TLSOptions): Error
         
         /** Configure this ENetHost to use the custom Godot extension allowing DTLS encryption for ENet clients. Call this before [method connect_to_host] to have ENet connect using DTLS validating the server certificate against [param hostname]. You can pass the optional [param client_options] parameter to customize the trusted certification authorities, or disable the common name verification. See [method TLSOptions.client] and [method TLSOptions.client_unsafe]. */
-        dtls_client_setup(hostname: string, client_options?: TLSOptions): Error
+        dtls_client_setup(hostname: string, client_options?: TLSOptions /* = undefined */): Error
         
         /** Configures the DTLS server to automatically drop new connections.  
          *      
@@ -1166,17 +1166,17 @@ declare module "godot" {
          *    
          *  If you want to assign shortcut to the menu item, use [method add_context_menu_item_from_shortcut] instead.  
          */
-        add_context_menu_item(name: string, callback: Callable, icon?: Texture2D): void
+        add_context_menu_item(name: string, callback: Callable, icon?: Texture2D /* = undefined */): void
         
         /** Add custom option to the context menu of the plugin's specified slot. The option will have the [param shortcut] assigned and reuse its callback. The shortcut has to be registered beforehand with [method add_menu_shortcut].  
          *    
          */
-        add_context_menu_item_from_shortcut(name: string, shortcut: Shortcut, icon?: Texture2D): void
+        add_context_menu_item_from_shortcut(name: string, shortcut: Shortcut, icon?: Texture2D /* = undefined */): void
         
         /** Add a submenu to the context menu of the plugin's specified slot. The submenu is not automatically handled, you need to connect to its signals yourself. Also the submenu is freed on every popup, so provide a new [PopupMenu] every time.  
          *    
          */
-        add_context_submenu_item(name: string, menu: PopupMenu, icon?: Texture2D): void
+        add_context_submenu_item(name: string, menu: PopupMenu, icon?: Texture2D /* = undefined */): void
         /** @deprecated Internal use. Does not exist at runtime. */
         __godotNameMap: __NameMapEditorContextMenuPlugin;
     }
@@ -1228,10 +1228,10 @@ declare module "godot" {
     class EditorDebuggerSession extends RefCounted {
         constructor(identifier?: any)
         /** Sends the given [param message] to the attached remote instance, optionally passing additionally [param data]. See [EngineDebugger] for how to retrieve those messages. */
-        send_message(message: string, data?: GArray): void
+        send_message(message: string, data?: GArray /* = [] */): void
         
         /** Toggle the given [param profiler] on the attached remote instance, optionally passing additionally [param data]. See [EngineProfiler] for more details. */
-        toggle_profiler(profiler: string, enable: boolean, data?: GArray): void
+        toggle_profiler(profiler: string, enable: boolean, data?: GArray /* = [] */): void
         
         /** Returns `true` if the attached remote instance is currently in the debug loop. */
         is_breaked(): boolean
@@ -1385,7 +1385,7 @@ declare module "godot" {
         get_worst_message_type(): EditorExportPlatform.ExportMessageType
         
         /** Executes specified command on the remote host via SSH protocol and returns command output in the [param output]. */
-        ssh_run_on_remote(host: string, port: string, ssh_arg: PackedStringArray | string[], cmd_args: string, output?: GArray, port_fwd?: int64 /* = -1 */): Error
+        ssh_run_on_remote(host: string, port: string, ssh_arg: PackedStringArray | string[], cmd_args: string, output?: GArray /* = [] */, port_fwd?: int64 /* = -1 */): Error
         
         /** Executes specified command on the remote host via SSH protocol and returns process ID (on the remote host) without waiting for command to finish. */
         ssh_run_on_remote_no_wait(host: string, port: string, ssh_args: PackedStringArray | string[], cmd_args: string, port_fwd?: int64 /* = -1 */): int64
@@ -1397,7 +1397,7 @@ declare module "godot" {
         get_internal_export_files(preset: EditorExportPreset, debug: boolean): GDictionary
         
         /** Returns array of core file names that always should be exported regardless of preset config. */
-        static get_forced_export_files(preset?: EditorExportPreset): PackedStringArray
+        static get_forced_export_files(preset?: EditorExportPreset /* = undefined */): PackedStringArray
         /** @deprecated Internal use. Does not exist at runtime. */
         __godotNameMap: __NameMapEditorExportPlatform;
     }
@@ -2436,7 +2436,7 @@ declare module "godot" {
         /* gdvirtual */ _can_import_threaded(): boolean
         
         /** This function can only be called during the [method _import] callback and it allows manually importing resources from it. This is useful when the imported file generates external resources that require importing (as example, images). Custom parameters for the ".import" file can be passed via the [param custom_options]. Additionally, in cases where multiple importers can handle a file, the [param custom_importer] can be specified to force a specific one. This function performs a resource import and returns immediately with a success or error code. [param generator_parameters] defines optional extra metadata which will be stored as [code skip-lint]generator_parameters` in the `remap` section of the `.import` file, for example to store a md5 hash of the source data. */
-        append_import_external_resource(path: string, custom_options?: GDictionary /* = new GDictionary() */, custom_importer?: string /* = '' */, generator_parameters?: any /* = {} */): Error
+        append_import_external_resource(path: string, custom_options?: GDictionary /* = new GDictionary() */, custom_importer?: string /* = '' */, generator_parameters?: any /* = <any> {} */): Error
         /** @deprecated Internal use. Does not exist at runtime. */
         __godotNameMap: __NameMapEditorImportPlugin;
     }
@@ -2598,7 +2598,7 @@ declare module "godot" {
         add_lines(lines: PackedVector3Array | Vector3[], material: Material, billboard?: boolean /* = false */, modulate?: Color /* = new Color(1, 1, 1, 1) */): void
         
         /** Adds a mesh to the gizmo with the specified [param material], local [param transform] and [param skeleton]. Call this method during [method _redraw]. */
-        add_mesh(mesh: Mesh, material?: Material, transform?: Transform3D /* = new Transform3D() */, skeleton?: SkinReference): void
+        add_mesh(mesh: Mesh, material?: Material /* = undefined */, transform?: Transform3D /* = new Transform3D() */, skeleton?: SkinReference /* = undefined */): void
         
         /** Adds the specified [param segments] to the gizmo's collision shape for picking. Call this method during [method _redraw]. */
         add_collision_segments(segments: PackedVector3Array | Vector3[]): void
@@ -2722,13 +2722,13 @@ declare module "godot" {
         /** Creates a handle material with its variants (selected and/or editable) and adds them to the internal material list. They can then be accessed with [method get_material] and used in [method EditorNode3DGizmo.add_handles]. Should not be overridden.  
          *  You can optionally provide a texture to use instead of the default icon.  
          */
-        create_handle_material(name: string, billboard?: boolean /* = false */, texture?: Texture2D): void
+        create_handle_material(name: string, billboard?: boolean /* = false */, texture?: Texture2D /* = undefined */): void
         
         /** Adds a new material to the internal material list for the plugin. It can then be accessed with [method get_material]. Should not be overridden. */
         add_material(name: string, material: StandardMaterial3D): void
         
         /** Gets material from the internal list of materials. If an [EditorNode3DGizmo] is provided, it will try to get the corresponding variant (selected and/or editable). */
-        get_material(name: string, gizmo?: EditorNode3DGizmo): null | StandardMaterial3D
+        get_material(name: string, gizmo?: EditorNode3DGizmo /* = undefined */): null | StandardMaterial3D
         /** @deprecated Internal use. Does not exist at runtime. */
         __godotNameMap: __NameMapEditorNode3DGizmoPlugin;
     }
@@ -3016,14 +3016,14 @@ declare module "godot" {
         /** Adds a control to the bottom panel (together with Output, Debug, Animation, etc.). Returns a reference to the button added. It's up to you to hide/show the button when needed. When your plugin is deactivated, make sure to remove your custom control with [method remove_control_from_bottom_panel] and free it with [method Node.queue_free].  
          *  Optionally, you can specify a shortcut parameter. When pressed, this shortcut will toggle the bottom panel's visibility. See the default editor bottom panel shortcuts in the Editor Settings for inspiration. Per convention, they all use [kbd]Alt[/kbd] modifier.  
          */
-        add_control_to_bottom_panel(control: Control, title: string, shortcut?: Shortcut): null | Button
+        add_control_to_bottom_panel(control: Control, title: string, shortcut?: Shortcut /* = undefined */): null | Button
         
         /** Adds the control to a specific dock slot.  
          *  If the dock is repositioned and as long as the plugin is active, the editor will save the dock position on further sessions.  
          *  When your plugin is deactivated, make sure to remove your custom control with [method remove_control_from_docks] and free it with [method Node.queue_free].  
          *  Optionally, you can specify a shortcut parameter. When pressed, this shortcut will open and focus the dock.  
          */
-        add_control_to_dock(slot: EditorPlugin.DockSlot, control: Control, shortcut?: Shortcut): void
+        add_control_to_dock(slot: EditorPlugin.DockSlot, control: Control, shortcut?: Shortcut /* = undefined */): void
         
         /** Removes the control from the dock. You have to manually [method Node.queue_free] the control. */
         remove_control_from_docks(control: Control): void
@@ -3811,7 +3811,7 @@ declare module "godot" {
         set_project_metadata(section: string, key: string, data: any): void
         
         /** Returns project-specific metadata for the [param section] and [param key] specified. If the metadata doesn't exist, [param default] will be returned instead. See also [method set_project_metadata]. */
-        get_project_metadata(section: string, key: string, default_?: any /* = {} */): any
+        get_project_metadata(section: string, key: string, default_?: any /* = <any> {} */): any
         
         /** Sets the list of favorite files and directories for this project. */
         set_favorites(dirs: PackedStringArray | string[]): void
@@ -3983,7 +3983,7 @@ declare module "godot" {
          *  The way undo operation are ordered in actions is dictated by [param backward_undo_ops]. When [param backward_undo_ops] is `false` undo option are ordered in the same order they were added. Which means the first operation to be added will be the first to be undone.  
          *  If [param mark_unsaved] is `false`, the action will not mark the history as unsaved. This is useful for example for actions that change a selection, or a setting that will be saved automatically. Otherwise, this should be left to `true` if the action requires saving by the user or if it can cause data loss when left unsaved.  
          */
-        create_action(name: string, merge_mode?: UndoRedo.MergeMode /* = 0 */, custom_context?: Object, backward_undo_ops?: boolean /* = false */, mark_unsaved?: boolean /* = true */): void
+        create_action(name: string, merge_mode?: UndoRedo.MergeMode /* = 0 */, custom_context?: Object /* = undefined */, backward_undo_ops?: boolean /* = false */, mark_unsaved?: boolean /* = true */): void
         
         /** Commits the action. If [param execute] is `true` (default), all "do" methods/properties are called/set when this function is called. */
         commit_action(execute?: boolean /* = true */): void
@@ -4861,7 +4861,7 @@ declare module "godot" {
         /** Executes the expression that was previously parsed by [method parse] and returns the result. Before you use the returned object, you should check if the method failed by calling [method has_execute_failed].  
          *  If you defined input variables in [method parse], you can specify their values in the inputs array, in the same order.  
          */
-        execute(inputs?: GArray, base_instance?: Object, show_error?: boolean /* = true */, const_calls_only?: boolean /* = false */): any
+        execute(inputs?: GArray /* = [] */, base_instance?: Object /* = undefined */, show_error?: boolean /* = true */, const_calls_only?: boolean /* = false */): any
         
         /** Returns `true` if [method execute] has failed. */
         has_execute_failed(): boolean

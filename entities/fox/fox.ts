@@ -1,11 +1,16 @@
-import { Area2D, AudioStreamPlayer2D, Callable, FloatType, Input, InputEvent, is_zero_approx, Node, SceneNodes, Sprite2D, Variant, Vector2 } from "godot";
-import { Export } from "godot.annotations";
+import { Area2D, AudioStreamPlayer2D, Callable, FloatType, Input, InputEvent, is_zero_approx, Node, ResourceLoader, SceneNodes, Signal, Sprite2D, Variant, Vector2,  } from "godot";
+import { Export, ExportSignal } from "godot.annotations";
 import { STOPPABLE } from "../../common/groups";
 import Dice from "../dice/dice";
 
 export default class Fox extends Area2D<SceneNodes['entities/fox/fox.tscn']> {
+    readonly DICE = ResourceLoader.load('res://entities/dice/dice.tscn')
+
     @Export(Variant.Type.TYPE_FLOAT)
     private speed: number = 250
+        
+    @ExportSignal()
+    declare scored: Signal<() => void>
 
     sounds?: AudioStreamPlayer2D
     sprite2d?: Sprite2D
@@ -13,7 +18,7 @@ export default class Fox extends Area2D<SceneNodes['entities/fox/fox.tscn']> {
     _ready(): void {
         this.add_to_group(STOPPABLE)
         this.area_entered.connect(
-            Callable.create(this, area => this.onAreaEntered(area))
+            Callable.create(this, this.onAreaEntered)
         )
         this.sounds = this.get_node('Sounds')
         this.sprite2d = this.get_node('Sprite2D')
@@ -29,15 +34,12 @@ export default class Fox extends Area2D<SceneNodes['entities/fox/fox.tscn']> {
     }
 
     private onAreaEntered(area: Area2D) {
-        if (isDice(area)) {
-            const dice = area
-            dice.destroy()
+        if (area instanceof Dice) {
+            area.queue_free()
             this.sounds?.play()
+            this.scored.emit()
         }
     }
 }
 
-function isDice(node: Node): node is Dice {
-    return node.is_class('Dice')
-}
 

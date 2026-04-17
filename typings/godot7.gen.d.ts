@@ -748,7 +748,7 @@ declare module "godot" {
         accept_stream(stream: StreamPeer, server_options: TLSOptions): Error
         
         /** Connects to a peer using an underlying [StreamPeer] [param stream] and verifying the remote certificate is correctly signed for the given [param common_name]. You can pass the optional [param client_options] parameter to customize the trusted certification authorities, or disable the common name verification. See [method TLSOptions.client] and [method TLSOptions.client_unsafe]. */
-        connect_to_stream(stream: StreamPeer, common_name: string, client_options?: TLSOptions): Error
+        connect_to_stream(stream: StreamPeer, common_name: string, client_options?: TLSOptions /* = undefined */): Error
         
         /** Returns the status of the connection. */
         get_status(): StreamPeerTLS.Status
@@ -1375,7 +1375,7 @@ declare module "godot" {
         /** Inserts a triangle fan made of array data into [Mesh] being constructed.  
          *  Requires the primitive type be set to [constant Mesh.PRIMITIVE_TRIANGLES].  
          */
-        add_triangle_fan(vertices: PackedVector3Array | Vector3[], uvs?: PackedVector2Array | Vector2[] /* = [] */, colors?: PackedColorArray | Color[] /* = [] */, uv2s?: PackedVector2Array | Vector2[] /* = [] */, normals?: PackedVector3Array | Vector3[] /* = [] */, tangents?: GArray<Plane>): void
+        add_triangle_fan(vertices: PackedVector3Array | Vector3[], uvs?: PackedVector2Array | Vector2[] /* = [] */, colors?: PackedColorArray | Color[] /* = [] */, uv2s?: PackedVector2Array | Vector2[] /* = [] */, normals?: PackedVector3Array | Vector3[] /* = [] */, tangents?: GArray<Plane> /* = [] */): void
         
         /** Adds a vertex to index array if you are using indexed vertices. Does not need to be called before adding vertices. */
         add_index(index: int64): void
@@ -1430,7 +1430,7 @@ declare module "godot" {
         /** Returns a constructed [ArrayMesh] from current information passed in. If an existing [ArrayMesh] is passed in as an argument, will add an extra surface to the existing [ArrayMesh].  
          *  The [param flags] argument can be the bitwise OR of [constant Mesh.ARRAY_FLAG_USE_DYNAMIC_UPDATE], [constant Mesh.ARRAY_FLAG_USE_8_BONE_WEIGHTS], or [constant Mesh.ARRAY_FLAG_USES_EMPTY_VERTEX_ARRAY].  
          */
-        commit(existing?: ArrayMesh, flags?: int64 /* = 0 */): null | ArrayMesh
+        commit(existing?: ArrayMesh /* = undefined */, flags?: int64 /* = 0 */): null | ArrayMesh
         
         /** Commits the data to the same format used by [method ArrayMesh.add_surface_from_arrays], [method ImporterMesh.add_surface], and [method create_from_arrays]. This way you can further process the mesh data using the [ArrayMesh] or [ImporterMesh] APIs. */
         commit_to_arrays(): GArray
@@ -1606,13 +1606,13 @@ declare module "godot" {
          *      
          *  **Note:** On the Web platform, TLS verification is always enforced against the CA list of the web browser. This is considered a security feature.  
          */
-        static client(trusted_chain?: X509Certificate, common_name_override?: string /* = '' */): null | TLSOptions
+        static client(trusted_chain?: X509Certificate /* = undefined */, common_name_override?: string /* = '' */): null | TLSOptions
         
         /** Creates an **unsafe** TLS client configuration where certificate validation is optional. You can optionally provide a valid [param trusted_chain], but the common name of the certificates will never be checked. Using this configuration for purposes other than testing **is not recommended**.  
          *      
          *  **Note:** On the Web platform, TLS verification is always enforced against the CA list of the web browser. This is considered a security feature.  
          */
-        static client_unsafe(trusted_chain?: X509Certificate): null | TLSOptions
+        static client_unsafe(trusted_chain?: X509Certificate /* = undefined */): null | TLSOptions
         
         /** Creates a TLS server configuration using the provided [param key] and [param certificate].  
          *      
@@ -1753,7 +1753,7 @@ declare module "godot" {
         remove_tab(tab_idx: int64): void
         
         /** Adds a new tab. */
-        add_tab(title?: string /* = '' */, icon?: Texture2D): void
+        add_tab(title?: string /* = '' */, icon?: Texture2D /* = undefined */): void
         
         /** Returns the index of the tab at local coordinates [param point]. Returns `-1` if the point is outside the control boundaries or if there's no tab at the queried position. */
         get_tab_idx_at_point(point: Vector2): int64
@@ -3020,7 +3020,7 @@ declare module "godot" {
         set_bidi_override(override: GArray): void
         
         /** Adds text span and font to draw it. */
-        add_string(text: string, font: Font, font_size: int64, language?: string /* = '' */, meta?: any /* = {} */): boolean
+        add_string(text: string, font: Font, font_size: int64, language?: string /* = '' */, meta?: any /* = <any> {} */): boolean
         
         /** Adds inline object to the text buffer, [param key] must be unique. In the text, object is represented as [param length] object replacement characters. */
         add_object(key: any, size: Vector2, inline_align?: InlineAlignment /* = 5 */, length?: int64 /* = 1 */, baseline?: float64 /* = 0 */): boolean
@@ -3218,7 +3218,7 @@ declare module "godot" {
         clear_dropcap(): void
         
         /** Adds text span and font to draw it. */
-        add_string(text: string, font: Font, font_size: int64, language?: string /* = '' */, meta?: any /* = {} */): boolean
+        add_string(text: string, font: Font, font_size: int64, language?: string /* = '' */, meta?: any /* = <any> {} */): boolean
         
         /** Adds inline object to the text buffer, [param key] must be unique. In the text, object is represented as [param length] object replacement characters. */
         add_object(key: any, size: Vector2, inline_align?: InlineAlignment /* = 5 */, length?: int64 /* = 1 */, baseline?: float64 /* = 0 */): boolean
@@ -4303,7 +4303,7 @@ declare module "godot" {
         shaped_text_get_spacing(shaped: RID, spacing: TextServer.SpacingType): int64
         
         /** Adds text span and font to draw it to the text buffer. */
-        shaped_text_add_string(shaped: RID, text: string, fonts: GArray<RID>, size: int64, opentype_features?: GDictionary /* = new GDictionary() */, language?: string /* = '' */, meta?: any /* = {} */): boolean
+        shaped_text_add_string(shaped: RID, text: string, fonts: GArray<RID>, size: int64, opentype_features?: GDictionary /* = new GDictionary() */, language?: string /* = '' */, meta?: any /* = <any> {} */): boolean
         
         /** Adds inline object to the text buffer, [param key] must be unique. In the text, object is represented as [param length] object replacement characters. */
         shaped_text_add_object(shaped: RID, key: any, size: Vector2, inline_align?: InlineAlignment /* = 5 */, length?: int64 /* = 1 */, baseline?: float64 /* = 0 */): boolean
@@ -5332,6 +5332,18 @@ declare module "godot" {
         /* gdvirtual */ _cleanup(): void
         /** @deprecated Internal use. Does not exist at runtime. */
         __godotNameMap: __NameMapTextServerExtension;
+    }
+    /** @deprecated Internal use. Does not exist at runtime. */
+    interface __NameMapTextServerFallback extends __NameMapTextServerExtension {
+    }
+    /** A fallback implementation of Godot's text server, without support for BiDi and complex text layout.  
+     *  	  
+     *  @link https://docs.godotengine.org/en/4.5/classes/class_textserverfallback.html  
+     */
+    class TextServerFallback extends TextServerExtension {
+        constructor(identifier?: any)
+        /** @deprecated Internal use. Does not exist at runtime. */
+        __godotNameMap: __NameMapTextServerFallback;
     }
     /** @deprecated Internal use. Does not exist at runtime. */
     interface __NameMapTexture extends __NameMapResource {
@@ -8008,7 +8020,7 @@ declare module "godot" {
          *  If [param parent] is `null`, the root item will be the parent, or the new item will be the root itself if the tree is empty.  
          *  The new item will be the [param index]-th child of parent, or it will be the last child if there are not enough siblings.  
          */
-        create_item(parent?: TreeItem, index?: int64 /* = -1 */): TreeItem
+        create_item(parent?: TreeItem /* = undefined */, index?: int64 /* = -1 */): TreeItem
         
         /** Returns the tree's root item, or `null` if the tree is empty. */
         get_root(): null | TreeItem
